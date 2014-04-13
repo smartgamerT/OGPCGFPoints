@@ -17,7 +17,6 @@ public class Avatar extends Actor
      */
     public void act() 
     {
-        findSurpriseBox();
         
         if (Greenfoot.isKeyDown("right"))
         {
@@ -38,19 +37,5 @@ public class Avatar extends Actor
         {
             setLocation( getX(), getY()+ 1);
         }
-    }
-    
-     public boolean findSurpriseBox()
-    {
-//         setImage (open);
-        removeTouching(SurpriseBox.class);
-        return true;
-        //Actor sb = getOneObjectAtOffset(0, 0, SurpriseBox.class);
-        //if(isTouching(SurpriseBox.class)) 
-//         {
-//             removeObject(sb);
-//             return true;
-//         }
-        
     }
 }

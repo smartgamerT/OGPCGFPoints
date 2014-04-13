@@ -15,13 +15,16 @@ public class SurpriseBox extends Actor
     private GreenfootImage open = new GreenfootImage("opened-box.png");
     private GreenfootImage close = new GreenfootImage("closedbox.png");
     private GreenfootImage plus10 = new GreenfootImage("10plus.png");
+    private GreenfootImage minus10 = new GreenfootImage("10minus.png");
     int timer;
     int counter;
+    int delta = 0;
 
     public SurpriseBox(PointsBar pb)
     {
         pointsBar = pb;
         setImage(close);
+
     }
 
     /**
@@ -30,30 +33,39 @@ public class SurpriseBox extends Actor
      */
     public void act() 
     {   
-        if(foundAvatar())
+        if (timer == 0)
         {
-            timer++;
-            counter++;
-            setImage(open);
-            //             setImage();
-            int delta = getFun();
-            pointsBar.updateScore(delta);
-            //             setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+            if(foundAvatar())
+            {
+                timer++;
+                setImage(open);
+                delta = getFun();
+            }
         }
 
         if (timer > 0)
             timer++;
 
-        if (counter > 0)
-            counter++;    
-
-        if (timer == 50)
+        if (timer == 80)
         {
-            setImage(close);
-            //             setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
-            timer = 0;
-        }
+            if (delta == 10)
+            {
+                setImage(plus10);
+            }
+            else
+            {
+                setImage(minus10);
+            }
 
+        }
+         
+        if (timer == 160)
+            {
+                pointsBar.updateScore(delta);
+                getWorld().removeObject(this);
+                timer = 0;
+                delta = 0;
+            }
     }
 
     public int getFun()
@@ -67,13 +79,6 @@ public class SurpriseBox extends Actor
         else 
         { 
             soundapp.play ();
-            setImage(plus10);
-
-            //             if (counter == 50)
-            //             {
-            //               
-            //             removeObject((Actor)this);
-            //             }
             return d = 10;
         }
 
@@ -82,11 +87,8 @@ public class SurpriseBox extends Actor
     public boolean foundAvatar()
     {
         Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
-      
-//         if(isTouching(Avatar.class))
         if (Avatar!= null) 
-         {
-//             world.removeObject(SurpriseBox);
+        {
             setImage(open);
             return true;
         }
@@ -94,5 +96,5 @@ public class SurpriseBox extends Actor
         {
             return false;
         }
-     }
+    }
 }
