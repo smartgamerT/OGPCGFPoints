@@ -9,7 +9,10 @@ import java.lang.*;
  */
 public class PowerUp extends Actor
 {
+    PointsBar pointsBar;
     PointsBar timeRem;
+    int delta = 0;
+    int timer;
     private GreenfootSound soundapp = new GreenfootSound("applause.wav");
     //     private Timer timer;
 
@@ -26,37 +29,43 @@ public class PowerUp extends Actor
     {
         if(foundAvatar())
         {
-            int delta = getFun();
+            timer++;
+            delta = getFun();
             timeRem.updateTimeRem(delta);
             setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
         }
 
-        //         {
-        //             timer = new Timer(1000, this);
-        //             timer.setInitialDelay(1000);
-        //             timer.start();
-        //         }
-        //         setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
-        //         
-        //         {
-        //             move(-10);
-        //         }
-        //         else 
-        //         {
-        //             move(0);
-        //         }
+        if (timer > 0)
+            timer++;
+
+        if (timer == 160)
+        {
+            pointsBar.updateTimeRem(delta);
+            getWorld().removeObject(this);
+            timer = 0;
+            delta = 0;
+
+        }         
     }
+   
 
     public int getFun()
     {
         int d = Greenfoot.getRandomNumber(2);
-        return d = 10;
+        if (d != 0)
+        {
+            return d = -10;
+        }
+        else 
+        { 
+            return d = 10;
+        }
 
     }
 
     public boolean foundAvatar()
     {
-//         Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
+        //         Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
         if(isTouching(Avatar.class)) 
         {
             soundapp.play ();
