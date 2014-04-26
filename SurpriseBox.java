@@ -9,7 +9,7 @@ import java.lang.*;
  */
 public class SurpriseBox extends Actor
 {
-    PointsBar pointsBar;
+    private Counter counter;
     private GreenfootSound soundapp = new GreenfootSound("applause.wav");
     private GreenfootSound soundno = new GreenfootSound("beep1.wav");
     private GreenfootImage open = new GreenfootImage("opened-box.png");
@@ -17,12 +17,11 @@ public class SurpriseBox extends Actor
     private GreenfootImage plus10 = new GreenfootImage("10plus.png");
     private GreenfootImage minus10 = new GreenfootImage("10minus.png");
     int timer;
-    int counter;
     int delta = 0;
 
-    public SurpriseBox(PointsBar pb)
+    public SurpriseBox(Counter pcounter)
     {
-        pointsBar = pb;
+        counter = pcounter;
         setImage(close);
 
     }
@@ -35,10 +34,11 @@ public class SurpriseBox extends Actor
     {   
         if (timer == 0)
         {
+
             if(foundAvatar())
             {
                 timer++;
-                setImage(open);
+                // setImage(open);
                 delta = getFun();
             }
         }
@@ -46,7 +46,7 @@ public class SurpriseBox extends Actor
         if (timer > 0)
             timer++;
 
-        if (timer == 80)
+        if (timer == 30)
         {
             if (delta == 10)
             {
@@ -56,30 +56,30 @@ public class SurpriseBox extends Actor
             {
                 setImage(minus10);
             }
+            counter.add(delta);
 
         }
-         
-        if (timer == 160)
-            {
-                pointsBar.updateScore(delta);
-                getWorld().removeObject(this);
-                timer = 0;
-                delta = 0;
-            }
+
+        if (timer == 40)
+        {
+            getWorld().removeObject(this);
+            // timer++;
+            // delta = 0;
+        }
     }
 
     public int getFun()
     {
         int d = Greenfoot.getRandomNumber(2);
-        if (d != 0)
+        if (d < 1)
         {
             soundno.play ();
-            return d = -10;
+            return -10;
         }
         else 
         { 
             soundapp.play ();
-            return d = 10;
+            return 10;
         }
 
     }
@@ -89,6 +89,7 @@ public class SurpriseBox extends Actor
         Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
         if (Avatar!= null) 
         {
+            timer++;
             setImage(open);
             return true;
         }

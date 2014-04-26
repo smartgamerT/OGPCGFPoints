@@ -9,14 +9,18 @@ import java.lang.*;
  */
 public class PowerUp extends Actor
 {
+<<<<<<< HEAD
     PointsBar pointsBar;
     PointsBar timeRem;
     int delta = 0;
     int timer;
+=======
+    HealthBar timeRem;
+>>>>>>> 010433972edb5def32064cfe6c53035fea3f6f0a
     private GreenfootSound soundapp = new GreenfootSound("applause.wav");
     //     private Timer timer;
 
-    public PowerUp(PointsBar tr)
+    public PowerUp(HealthBar tr)
     {
         timeRem = tr;
     }
@@ -29,6 +33,7 @@ public class PowerUp extends Actor
     {
         if(foundAvatar())
         {
+<<<<<<< HEAD
             timer++;
             delta = getFun();
             timeRem.updateTimeRem(delta);
@@ -46,6 +51,13 @@ public class PowerUp extends Actor
             delta = 0;
 
         }         
+=======
+            int delta = getFun();
+            timeRem.addTime(delta);
+            setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+        }
+
+>>>>>>> 010433972edb5def32064cfe6c53035fea3f6f0a
     }
    
 
@@ -65,10 +77,15 @@ public class PowerUp extends Actor
 
     public boolean foundAvatar()
     {
+<<<<<<< HEAD
         //         Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
+=======
+     //  Actor Avatar = getOneObjectAtOffset(0, 0, Avatar.class);
+>>>>>>> 010433972edb5def32064cfe6c53035fea3f6f0a
         if(isTouching(Avatar.class)) 
         {
             soundapp.play ();
+            timeRem.addTime(10);
             return true;
         }
         else 

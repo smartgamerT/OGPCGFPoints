@@ -11,12 +11,15 @@ public class Avatar extends Actor
     boolean touchingSpikyBall2 = false;
     boolean touchingSpikyBall3 = false;
     private Counter counter;
-  
+    private boolean haskey = false;
     private int vSpeed = 0;
     private boolean jumping = false;
     private int jumpheight = 16;
     private int fallspeed = 1;
     private int Coinscollected;
+    private boolean GhostBelow = false;
+    private boolean SpiderBelow = false;
+    private boolean SpikyballBelow = false;
     private GreenfootImage run1r = new GreenfootImage("run1r.png");
     private GreenfootImage run2r = new GreenfootImage("run2r.png");
     private GreenfootImage run3r = new GreenfootImage("run3r.png");
@@ -40,6 +43,8 @@ public class Avatar extends Actor
        CheckKey();
        CheckFall();
        collectCoin();
+       grab();
+       exit();
        Collision();
     }
     public void CheckKey()
@@ -228,6 +233,34 @@ public class Avatar extends Actor
             return false;
         }
     }
+    // Taking the key
+     public void grab()
+    {
+        if (canSee(Key.class) )
+        {
+            get(Key.class);
+            haskey = true;
+           // score = score + 10;
+            //Greenfoot.playSound("keyfound.wav");
+        }
+    }
+
+    public void exit() // If Player has the key, they can open the door.
+    {
+        if (canSee(Door.class) && haskey == true) ((background)getWorld()).nextLevel();
+    }
+      public boolean canSee(Class clss)
+    {
+        Actor actor = getOneObjectAtOffset(0, 0, clss);
+        return actor != null;        
+    }
+    public void get(Class clss)
+    {
+        Actor actor = getOneObjectAtOffset(0, 0, clss);
+        if(actor != null) {
+            getWorld().removeObject(actor);
+        }
+    }   
 
     //Shefali 
    
@@ -239,34 +272,43 @@ public class Avatar extends Actor
     
         if(collision1 != null)//if you have not run into it 
         {
-            World myWorld = getWorld();
-            background space = (background)myWorld;
-           // HealthBar healthbar = space.getHealthBar();
-            if(touchingSpikyBall3 == false)
+            if(SpikyballBelow == false)
             {
-               // healthbar.loseHealth();
-                touchingSpikyBall2 = true;
-                touchingSpikyBall3 = true;
-                //if(healthbar.health <=0)
-              //   {
-               //     myWorld.removeObject(this);
-               //  }
+                counter.add(-1);
+                Greenfoot.playSound("explosion.wav");
+                SpikyballBelow = true;
             }
-            counter.add(-1);
-            Greenfoot.playSound("explosion.wav");
+        }
+        else
+        {
+            SpikyballBelow = false;
         }
     
         if(collision2 != null)//if you have not run into it 
         {
-            counter.add(-1);
-            Greenfoot.playSound("explosion.wav");
+            if(SpiderBelow == false)
+            {
+                counter.add(-1);
+                Greenfoot.playSound("explosion.wav");
+               SpiderBelow = true;
+            }
         }
-
-    
+        else
+        {
+            SpiderBelow = false;
+        }
         if(collision3 != null)//if you have not run into it 
         {
-            counter.add(-1);
-            Greenfoot.playSound("Ghosthit.wav");
+           if(GhostBelow == false)
+           {
+               counter.add(-1);
+               Greenfoot.playSound("Ghosthit.wav");
+               GhostBelow = true;
+           }
+        }
+        else
+        {
+            GhostBelow = false;
         }
     
     }  

@@ -8,36 +8,72 @@ import java.awt.Color;
  */
 public class HealthBar extends Actor
 {
-    int health = 50;
-    int healthBarWidth = 200;
-    int healthBarHeight = 50;
+    int health = 120;
+    int totalTime;
+    int healthBarWidth = 120;
+    int healthBarHeight = 75;
     int pixelsPerHealthPoint = (int)healthBarWidth/health;
+    int durationSecs;
+    long startTime;
+    private int score;
+    private int timeRem;
+    int timer;
     /**
      * Act - do whatever the HealthBar wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
- //   public HealthBar()
-   // {
-  //      update();
-  //  }
+    public HealthBar()
+    {
+        startTime = System.currentTimeMillis();  
+        totalTime = 120;
+        score = 0;
+        timeRem = 60;
+        setImage (new GreenfootImage(200, 30));
+        update();
+    }
+
     public void act() 
     {
         update();
+        //updateTimeRem(-1);
     }    
+
     public void update()
     {
         setImage(new GreenfootImage(healthBarWidth + 2, healthBarHeight + 2));
         GreenfootImage myImage = getImage();
         myImage.setColor(Color.WHITE);
         myImage.drawRect(0, 0, healthBarWidth + 1, healthBarHeight + 1);
-        myImage.setColor(Color.RED);
+        myImage.setColor(Color.GREEN);
         myImage.fillRect(1, 1, health*pixelsPerHealthPoint, healthBarHeight);
+        // Later (for example in an act() method), do:  
+        long currentTime = System.currentTimeMillis();  
+        int durationMillis = (int)(currentTime - startTime);  
+        // durationMillis is in milliseconds, so you  
+        // can convert to seconds/minutes whatever:  
+        durationSecs = durationMillis / 1000; 
+        health = totalTime - durationSecs;
     }
-    
-    public void loseHealth()
+    //     public HealthBar()
+    //     {
+    //         score = 0;
+    //         totalTime = 120;
+    //         setImage (new GreenfootImage(200, 30));
+    //         update();
+    //     }
+    public void addTime(int extra)
     {
-       health--; 
+        if(extra > durationSecs)
+        {
+            totalTime += durationSecs;
+        }
+        else
+        {
+            totalTime += extra;
+        }
+        update();
+        
     }
-}
+}     
 
 

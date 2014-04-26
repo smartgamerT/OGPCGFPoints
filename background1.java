@@ -5,7 +5,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class background extends World
+public class background1 extends World
 {
     Counter counter;
     HealthBar healthBar;
@@ -14,29 +14,27 @@ public class background extends World
     /** ********************      MAP LEGEND     *********************** */
     //      a = avatar       f = floor           b = brownblock
     //      c = brownblockL  g = Goldcoin        h = Bluecoin
-    //      r = Redcoin      d = Brickblock      w = Ghos
-    //      z = Counter      s = Spikyball2      q = Spider
+    //      r = Redcoin      d = Brickblock      w = Ghost
+    //      z = Counter      s = Spikyball2      q = Spikyball3
     //      m = Healthbar    x = SurpriseBox     p = PowerUp
     //      k = key          o = Door
     public void setFields()
     {
-        map = new String[] 
-        { 
-            "               z      m ",
-            "  o                     ",
-            " ddd       p            ",
-            "        grrwrkg         ",
-            "       ddddddddd        ",
-            "  gg                gg  ",
-            "  dd                dd  ",
-            "        g      r        ",
-            "      ddd  b  ddd       ",
+        map = new String[] { "               z      m ",
             "                        ",
-            "     q            s     ",
-            "    gr            rh    ",
-            "   ddd            ddd   ",
-            "  a                     ",
-            "        g r   r  g      ",
+            "   o                    ",
+            "  ddd          grhr     ",
+            "              ddddd     ",
+            "       b                ",
+            "                        ",
+            "  g q g                 ",
+            "  ddddd      c          ",
+            "                        ",
+            "      rh                ",
+            "     dddd         w     ",
+            "                dgggg   ",
+            "   a            ddddd k ",
+            "       h r  g r g g g   ",
             "fffffffffffffffffffffffff" };
     }
 
@@ -44,16 +42,16 @@ public class background extends World
      * Constructor for objects of class background.
      * 
      */
-    public background()
+    public background1()
     {    
 
         super(800, 500, 1); 
 
         setFields();
         counter = new Counter();
-        healthBar = new HealthBar();
+        healthBar = new HealthBar(); 
         prepare();
-        //PointsBar pb = new PointsBar();
+        //TimeRem = new timeRem();
 
         for (int i=0; i<map.length; i++) for (int j=0; j<map[i].length(); j++)
             {
@@ -73,7 +71,7 @@ public class background extends World
                 if (kind == 9) actor = counter;
                 if (kind == 10)actor = new Spikyball2();
                 if (kind == 11)actor = new Spikyball3();
-                if (kind == 12)actor = healthBar;
+                if (kind == 12)actor = new HealthBar();
                 if (kind == 13)actor = new Key();
                 if (kind == 14)actor = new Door();
                 // if (kind == 13) actor = new PowerUp();
@@ -82,12 +80,6 @@ public class background extends World
                 addObject(actor, 16+j*32, 16+i*32);
         }
     }
-
-    public void nextLevel()
-    {
-        Greenfoot.setWorld(new background1());
-    }
-
     // HealthBar healthbar = new HealthBar();
 
     public HealthBar getHealthBar()
@@ -116,3 +108,4 @@ public class background extends World
      */
 
 }
+
