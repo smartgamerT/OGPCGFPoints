@@ -5,10 +5,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class background1 extends base
+public class background2 extends base
 {
-    
-    public background1(Counter counter, HealthBar healthbar)
+    public background2(Counter counter, HealthBar healthbar)
     {
         super(counter,healthbar);
     }
@@ -23,7 +22,7 @@ public class background1 extends base
     {
         map = new String[] { "               z      m ",
             "                        ",
-            "   o                    ",
+            "                        ",
             "  ddd          grhr     ",
             "              ddddd     ",
             "       b                ",
@@ -34,20 +33,12 @@ public class background1 extends base
             "      rh                ",
             "     dddd         w     ",
             "                dgggg   ",
-            "   a            ddddd k ",
+            "   a            ddddd   ",
             "       h r  g r g g g   ",
             "fffffffffffffffffffffffff" };
     }
     public void nextLevel()
     {
-        background2 bg2 = new background2(counter, healthBar);
-
-        Greenfoot.setWorld(bg2);
+        Greenfoot.setWorld(new Lvl2BkgDesert());
     }
-    public void setCounter(Counter counter, HealthBar healthBar)
-    {
-        this.counter = counter;
-        this.healthBar = healthBar;
-    }
-
 }
